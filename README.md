@@ -7,6 +7,7 @@
 
 ---
 
+
 ## Introduction
 
 Fork and clone this lesson for a template for your full-stack application. Take
