@@ -1,3 +1,5 @@
+
+
 // src/App.js
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
@@ -29,6 +31,7 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('learnsphere_user');
+    localStorage.removeItem('token'); // ✅ Also remove auth token on logout
   };
 
   const updateUser = (updatedUserData) => {
@@ -44,9 +47,16 @@ function App() {
         <Route path="/auth" render={(props) => <Auth {...props} onLogin={handleLogin} />} />
         <Route path="/login" render={(props) => <Auth {...props} onLogin={handleLogin} />} />
 
-        <Route path="/dashboard" render={() => (user ? <Dashboard user={user} updateUser={updateUser} /> : <Redirect to="/auth" />)} />
+        <Route
+          path="/dashboard"
+          render={() => (user ? <Dashboard user={user} updateUser={updateUser} /> : <Redirect to="/auth" />)}
+        />
         <Route exact path="/courses" render={() => <Courses />} />
-        <Route exact path="/course/:courseId" render={(props) => <CourseDetail {...props} user={user} updateUser={updateUser} />} />
+        <Route
+          exact
+          path="/course/:courseId"
+          render={(props) => <CourseDetail {...props} user={user} updateUser={updateUser} />}
+        />
         
         {/* ✅ Ensure route passes courseId and moduleId correctly */}
         <Route
@@ -63,8 +73,14 @@ function App() {
         <Route path="/quiz/:courseId?" render={(props) => <Quiz {...props} user={user} updateUser={updateUser} />} />
         <Route path="/leaderboard" render={() => <Leaderboard user={user} />} />
         <Route path="/chat" render={() => <Chat user={user} />} />
-        <Route path="/profile" render={() => (user ? <Profile user={user} updateUser={updateUser} /> : <Redirect to="/auth" />)} />
-        <Route path="/avatar" render={() => (user ? <AvatarCustomizer user={user} updateUser={updateUser} /> : <Redirect to="/auth" />)} />
+        <Route
+          path="/profile"
+          render={() => (user ? <Profile user={user} updateUser={updateUser} /> : <Redirect to="/auth" />)}
+        />
+        <Route
+          path="/avatar"
+          render={() => (user ? <AvatarCustomizer user={user} updateUser={updateUser} /> : <Redirect to="/auth" />)}
+        />
 
         <Redirect to="/" />
       </Switch>
