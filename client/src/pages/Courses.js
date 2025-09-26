@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-// ✅ Full dataset for all courses (kept inline for now)
+// ✅ Full dataset for all courses (inline)
 export const courses = [
   {
     id: "1",
@@ -16,9 +16,11 @@ export const courses = [
     thumbnail: "https://source.unsplash.com/600x400/?data,science",
     languages: ["Python", "SQL"],
     modules: [
-      { id: "1", title: "Introduction to Data Science", type: "notes", content: "Data Science is all about extracting insights from data using tools and algorithms.", completed: false },
-      { id: "2", title: "Python for Data Science", type: "video", content: "https://www.youtube.com/embed/r-uOLxNrNk8", completed: false },
-      { id: "3", title: "Mini Quiz: Data Basics", type: "quiz", content: "Test your understanding of basic Data Science concepts.", completed: false },
+      { id: "1", title: "Introduction to Data Science", type: "video", content: "https://www.youtube.com/embed/FsSrzmRawUg", completed: false },
+      { id: "2", title: "Data Collection & Cleaning", type: "video", content: "https://www.youtube.com/embed/WpX2F2BS3Qc", completed: false },
+      { id: "3", title: "Exploratory Data Analysis in Data Science", type: "video", content: "https://www.youtube.com/embed/QiqZliDXCCg", completed: false },
+      { id: "4", title: "Data Visualization in Data Science", type: "video", content: "https://www.youtube.com/embed/MiiANxRHSv4", completed: false },
+      { id: "5", title: "Machine Learning Basics", type: "video", content: "https://www.youtube.com/embed/7eh4d6sabA0", completed: false },
     ],
   },
   {
@@ -34,9 +36,10 @@ export const courses = [
     thumbnail: "https://source.unsplash.com/600x400/?web,development",
     languages: ["HTML", "CSS", "JavaScript", "React"],
     modules: [
-      { id: "1", title: "Intro to Web Development", type: "notes", content: "Web development involves building websites and applications for the internet.", completed: false },
-      { id: "2", title: "Frontend Basics", type: "video", content: "https://www.youtube.com/embed/pQN-pnXPaVg", completed: false },
-      { id: "3", title: "Mini Quiz: HTML & CSS", type: "quiz", content: "Answer questions on HTML and CSS fundamentals.", completed: false },
+      { id: "1", title: "Intro to Web Development", type: "video", content: "https://www.youtube.com/embed/5YDVJaItmaY", completed: false },
+      { id: "2", title: "HTML for Beginners", type: "video", content: "https://www.youtube.com/embed/FQdaUv95mR8", completed: false },
+      { id: "3", title: "Learn CSS in 20 Minutes", type: "video", content: "https://www.youtube.com/embed/1PnVor36_40", completed: false },
+      { id: "4", title: "JavaScript Basics", type: "video", content: "https://www.youtube.com/embed/xwKbtUP87Dk", completed: false },
     ],
   },
   {
@@ -52,9 +55,9 @@ export const courses = [
     thumbnail: "https://source.unsplash.com/600x400/?cyber,security",
     languages: ["Networking", "Linux"],
     modules: [
-      { id: "1", title: "Intro to Cyber Security", type: "notes", content: "Cybersecurity protects systems from attacks and unauthorized access.", completed: false },
-      { id: "2", title: "Ethical Hacking Basics", type: "video", content: "https://www.youtube.com/embed/3Kq1MIfTWCE", completed: false },
-      { id: "3", title: "Mini Quiz: Security Concepts", type: "quiz", content: "Test your knowledge on cybersecurity fundamentals.", completed: false },
+      { id: "1", title: "Introduction to Cybersecurity", type: "video", content: "https://www.youtube.com/embed/ULGILG-ZhO0", completed: false },
+      { id: "2", title: "Networking Fundamentals", type: "video", content: "https://www.youtube.com/embed/cNwEVYkx2Kk", completed: false },
+      { id: "3", title: "Cyber Threats & Attack Vectors", type: "video", content: "https://www.youtube.com/embed/lpPmrg720R4", completed: false },
     ],
   },
   {
@@ -67,12 +70,13 @@ export const courses = [
     rating: 4.6,
     studentsCount: 1500,
     instructor: "Linus Torvalds",
-    thumbnail: "https://source.unsplash.com/600x400/?mobile,app",
+    thumbnail: "https://dcdh7ea8gkhvt.cloudfront.net/blog/wp-content/uploads/2022/04/best-react-native-banner.webp",
     languages: ["JavaScript", "React Native"],
     modules: [
-      { id: "1", title: "Intro to Mobile Development", type: "notes", content: "Mobile apps run on phones and tablets and can be built natively or cross-platform.", completed: false },
-      { id: "2", title: "React Native Basics", type: "video", content: "https://www.youtube.com/embed/0-S5a0eXPoc", completed: false },
-      { id: "3", title: "Mini Quiz: Mobile Concepts", type: "quiz", content: "Quick questions on mobile application development basics.", completed: false },
+      { id: "1", title: "Introduction to Mobile Apps", type: "video", content: "https://www.youtube.com/embed/yye7rSsiV6k", completed: false },
+      { id: "2", title: "Mobile Platforms & Tools", type: "video", content: "https://www.youtube.com/embed/UJ8kiUWLXJg", completed: false },
+      { id: "3", title: "UI Design & Security", type: "video", content: "https://www.youtube.com/embed/RIX4ufelA58", completed: false },
+      { id: "4", title: "App Deployment", type: "video", content: "https://www.youtube.com/embed/2esQdKzRUCw", completed: false },
     ],
   },
   {
@@ -85,12 +89,29 @@ export const courses = [
     rating: 4.5,
     studentsCount: 3000,
     instructor: "Bjarne Stroustrup",
-    thumbnail: "https://source.unsplash.com/600x400/?programming,code",
+    thumbnail: "https://ucarecdn.com/aa29bd64-20d5-47eb-878b-928ee201e0b4/-/resize/700/",
     languages: ["Python"],
     modules: [
-      { id: "1", title: "What is Programming?", type: "notes", content: "Programming is giving instructions to a computer to perform tasks.", completed: false },
-      { id: "2", title: "Python Basics", type: "video", content: "https://www.youtube.com/embed/kqtD5dpn9C8", completed: false },
-      { id: "3", title: "Mini Quiz: Programming Logic", type: "quiz", content: "Test yourself on variables, loops, and conditionals.", completed: false },
+      { id: "1", title: "Introduction to Programming", type: "video", content: "https://www.youtube.com/embed/F7CWjuaC6gw", completed: false },
+      { id: "2", title: "Variables & Data Types", type: "video", content: "https://www.youtube.com/embed/cQT33yu9pY8", completed: false },
+      { id: "3", title: "Control Structures & Functions", type: "video", content: "https://www.youtube.com/embed/Zp5MuPOtsSY", completed: false },
+      { id: "4", title: "Programming Concepts", type: "video", content: "https://www.youtube.com/embed/kqtD5dpn9C8", completed: false },
+    ],
+  },
+  {
+    id: "6",
+    title: "System Design Security",
+    description: "Authentication, Authorization & Best Practices for secure systems.",
+    category: "System Design",
+    difficulty: "Advanced",
+    duration: "6 weeks",
+    rating: 4.8,
+    studentsCount: 950,
+    instructor: "Gene Spafford",
+    thumbnail: "https://source.unsplash.com/600x400/?system,security",
+    languages: ["Architecture", "Security"],
+    modules: [
+      { id: "1", title: "Authentication & Authorization", type: "video", content: "https://www.youtube.com/embed/muujW_JlcuM", completed: false },
     ],
   },
 ];
@@ -100,7 +121,7 @@ function Courses() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
 
-  const categories = ["all", "Programming", "Data Science", "Web Development", "Cyber Security", "Mobile Development"];
+  const categories = ["all", "Programming", "Data Science", "Web Development", "Cyber Security", "Mobile Development", "System Design"];
   const difficulties = ["all", "Beginner", "Intermediate", "Advanced"];
 
   const filteredCourses = (courses || []).filter((course) => {
@@ -118,7 +139,7 @@ function Courses() {
       <h1>Explore Courses</h1>
       <p className="subtitle">Discover amazing courses and start your learning journey today</p>
 
-      <div className="filters" style={{ display:'flex', gap:8, marginTop:8 }}>
+      <div className="filters" style={{ display: 'flex', gap: 8, marginTop: 8 }}>
         <input
           type="text"
           placeholder="Search courses..."

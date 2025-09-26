@@ -10,47 +10,27 @@ const CourseDetail = ({ user, updateUser }) => {
   const [modules, setModules] = useState([]);
 
   useEffect(() => {
-    // Make sure courseId is defined before fetching
     if (!courseId) return;
 
     const foundCourse = coursesData.find((c) => c.id === courseId);
     setCourse(foundCourse);
 
-    // Fetch modules only if course exists
-    if (foundCourse) {
-      setModules(foundCourse.modules || []);
+    if (foundCourse && Array.isArray(foundCourse.modules)) {
+      setModules(foundCourse.modules);
     }
   }, [courseId]);
 
-  const handleEnroll = async () => {
+  const handleEnroll = () => {
     if (!user) {
       history.push("/auth");
       return;
     }
 
-    try {
-      // 🔹 Send enrollment to backend
-      const response = await fetch("http://127.0.0.1:5000/api/enrollments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: user.id, course_id: courseId }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to enroll");
-      }
-
-      await response.json();
-
-      // 🔹 Update local user state
-      const updatedUser = {
-        ...user,
-        enrolledCourses: [...(user.enrolledCourses || []), courseId],
-      };
-      updateUser(updatedUser);
-    } catch (error) {
-      console.error("Enrollment error:", error);
-    }
+    const updatedUser = {
+      ...user,
+      enrolledCourses: [...(user.enrolledCourses || []), courseId]
+    };
+    updateUser(updatedUser);
   };
 
   if (!course) {
@@ -65,6 +45,7 @@ const CourseDetail = ({ user, updateUser }) => {
     <div className="container">
       <h1>{course.title}</h1>
       <p>{course.description}</p>
+
       {!user?.enrolledCourses?.includes(courseId) && (
         <button onClick={handleEnroll} className="btn-primary">
           Enroll
@@ -76,7 +57,7 @@ const CourseDetail = ({ user, updateUser }) => {
           <h2>Modules</h2>
           <ul>
             {modules.map((mod) => (
-              <li key={mod.id}>
+              <li key={mod.id} className="module-item">
                 <button
                   onClick={() =>
                     history.push(`/course/${courseId}/module/${mod.id}`)
@@ -85,9 +66,33 @@ const CourseDetail = ({ user, updateUser }) => {
                 >
                   {mod.title}
                 </button>
+
+                {/* Only show quiz button if this module has a quiz */}
+                {Array.isArray(mod.quiz) && mod.quiz.length > 0 && (
+                  <button
+                    onClick={() =>
+                      history.push(`/quiz/${courseId}?module=${mod.id}`)
+                    }
+                    className="btn-quiz"
+                  >
+                    Take Module Quiz
+                  </button>
+                )}
               </li>
             ))}
           </ul>
+
+          {/* Course-level quiz button */}
+          {Array.isArray(course.quiz) && course.quiz.length > 0 && (
+            <div style={{ marginTop: "20px" }}>
+              <button
+                onClick={() => history.push(`/quiz/${courseId}`)}
+                className="btn-quiz-primary"
+              >
+                Take Course Quiz
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
