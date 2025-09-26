@@ -1,3 +1,128 @@
+// // src/utils/coursesData.js
+
+// const coursesData = [
+//   {
+//     id: 1,
+//     title: "📘 Data Science Fundamentals",
+//     modules: [
+//       {
+//         id: 1,
+//         title: "Introduction to Data Science",
+//         notes: "Data Science is the field of using data to understand patterns, solve problems, and make better decisions. It combines programming, math, and domain knowledge.",
+//         summary: "Data Science = using data to find insights and make decisions."
+//       },
+//       {
+//         id: 2,
+//         title: "Data Collection & Cleaning",
+//         notes: "Data collection is the first step. Data cleaning makes the data accurate by removing errors and duplicates.",
+//         summary: "Collect data, then clean it to make it accurate and usable."
+//       },
+//       {
+//         id: 3,
+//         title: "Exploratory Data Analysis (EDA)",
+//         notes: "EDA is used to analyze and visualize data before applying advanced models. It involves finding trends, patterns, and anomalies.",
+//         summary: "EDA = analyzing and visualizing data to understand it better."
+//       },
+//       {
+//         id: 4,
+//         title: "Machine Learning Basics",
+//         notes: "Machine learning helps computers make predictions using past data. Algorithms like linear regression and decision trees are common.",
+//         summary: "Machine Learning = teaching computers to learn from data."
+//       },
+//       {
+//         id: 5,
+//         title: "Data Visualization",
+//         notes: "Data visualization uses charts and graphs to communicate insights clearly. Tools like Matplotlib, Seaborn, or PowerBI are used.",
+//         summary: "Visualizations = make data insights clear and easy to understand."
+//       }
+//     ],
+//     quiz: [
+//       { question: "What are the three key parts of Data Science?", options: ["Biology, Chemistry, Physics", "Programming, Statistics, Domain Knowledge", "HTML, CSS, JS", "Finance, Marketing, Medicine"], answer: "Programming, Statistics, Domain Knowledge" },
+//       { question: "Why is data cleaning important?", options: ["To make data colorful", "To make analysis accurate", "To delete files", "To create charts"], answer: "To make analysis accurate" },
+//       { question: "What does EDA stand for?", options: ["Easy Data Analysis", "Exploratory Data Analysis", "Essential Data Algorithms", "Expert Data Analytics"], answer: "Exploratory Data Analysis" },
+//       { question: "Which of these is a Machine Learning algorithm?", options: ["Linear Regression", "Word Processor", "Photoshop", "Browser"], answer: "Linear Regression" },
+//       { question: "Why do we use data visualization?", options: ["To confuse readers", "To communicate insights clearly", "To store data", "To delete information"], answer: "To communicate insights clearly" }
+//     ]
+//   },
+//   {
+//     id: 2,
+//     title: "🌐 Web Development Bootcamp",
+//     modules: [
+//       { id: 1, title: "HTML Basics", notes: "HTML is the structure of a webpage. It uses tags like <p>, <h1>, <div> to organize content.", summary: "HTML = skeleton of a webpage." },
+//       { id: 2, title: "CSS Styling", notes: "CSS styles HTML with colors, layouts, and fonts. It makes websites look attractive.", summary: "CSS = makes web pages look nice." },
+//       { id: 3, title: "JavaScript Basics", notes: "JavaScript makes web pages interactive (e.g., buttons, forms, animations).", summary: "JavaScript = interactivity of the web." },
+//       { id: 4, title: "Frontend Frameworks", notes: "Frameworks like React help developers build complex UIs easily.", summary: "React = a popular JavaScript library for building UIs." },
+//       { id: 5, title: "Backend Basics", notes: "Backends use Node.js, Express, and databases to store and process data.", summary: "Backend = handles data storage and logic." }
+//     ],
+//     quiz: [
+//       { question: "What does HTML stand for?", options: ["Hyper Trainer Marking Language", "Hyper Text Markup Language", "High Text Making Language", "Hyperlinks and Text Marking Language"], answer: "Hyper Text Markup Language" },
+//       { question: "What is CSS mainly used for?", options: ["Adding logic", "Styling", "Data storage", "Machine Learning"], answer: "Styling" },
+//       { question: "Which is a JavaScript framework?", options: ["React", "Excel", "Word", "SQL"], answer: "React" },
+//       { question: "What is the backend mainly responsible for?", options: ["Design", "Data and logic", "Colors", "Navigation"], answer: "Data and logic" },
+//       { question: "Which language is responsible for interactivity?", options: ["HTML", "CSS", "JavaScript", "Python"], answer: "JavaScript" }
+//     ]
+//   },
+//   {
+//     id: 3,
+//     title: "🔐 Cybersecurity Essentials",
+//     modules: [
+//       { id: 1, title: "Introduction to Cybersecurity", notes: "Cybersecurity protects systems, networks, and data from attacks.", summary: "Cybersecurity = protecting digital systems and data." },
+//       { id: 2, title: "Types of Cyber Threats", notes: "Threats include malware, phishing, ransomware, and social engineering.", summary: "Cyber threats = malware, phishing, ransomware." },
+//       { id: 3, title: "Network Security", notes: "Firewalls and VPNs help protect networks from attackers.", summary: "Network security = protect networks using firewalls, VPNs." },
+//       { id: 4, title: "Cryptography Basics", notes: "Cryptography protects data by encrypting and decrypting information.", summary: "Cryptography = making data unreadable without keys." },
+//       { id: 5, title: "Best Practices", notes: "Use strong passwords, 2FA, regular updates, and avoid suspicious links.", summary: "Best practices = strong passwords, updates, 2FA." }
+//     ],
+//     quiz: [
+//       { question: "What is cybersecurity?", options: ["Protecting digital systems", "Creating games", "Designing websites", "Editing videos"], answer: "Protecting digital systems" },
+//       { question: "Which of these is a cyber threat?", options: ["Phishing", "HTML", "CSS", "Word"], answer: "Phishing" },
+//       { question: "What does a firewall do?", options: ["Protects networks", "Writes code", "Styles pages", "Encrypts text"], answer: "Protects networks" },
+//       { question: "What does encryption do?", options: ["Makes data unreadable", "Deletes data", "Saves data", "Copies data"], answer: "Makes data unreadable" },
+//       { question: "Which is a good security practice?", options: ["Using weak passwords", "Clicking unknown links", "Using 2FA", "Never updating software"], answer: "Using 2FA" }
+//     ]
+//   },
+//   {
+//     id: 4,
+//     title: "📱 Mobile App Development",
+//     modules: [
+//       { id: 1, title: "Introduction to Mobile Apps", notes: "Mobile apps are programs for phones and tablets. They can be native or web-based.", summary: "Mobile apps = software for smartphones." },
+//       { id: 2, title: "Frontend (UI/UX)", notes: "Mobile apps need user-friendly design. Tools: Flutter, React Native.", summary: "Frontend = the design and interaction of apps." },
+//       { id: 3, title: "Backend for Apps", notes: "Backends store user data and connect apps to servers.", summary: "Backend = the brain of apps." },
+//       { id: 4, title: "Databases", notes: "Databases like Firebase or MongoDB store app data.", summary: "Databases = store information for apps." },
+//       { id: 5, title: "Publishing Apps", notes: "Apps are published on stores like Google Play and Apple App Store.", summary: "Publishing = making your app available to users." }
+//     ],
+//     quiz: [
+//       { question: "What are mobile apps?", options: ["Software for smartphones", "Software for washing machines", "Desktop programs only", "TV channels"], answer: "Software for smartphones" },
+//       { question: "Which tool is used for mobile UI?", options: ["React Native", "Photoshop", "Word", "Excel"], answer: "React Native" },
+//       { question: "What is the backend for apps?", options: ["Stores and processes data", "Makes colors", "Adds animations", "Shows videos"], answer: "Stores and processes data" },
+//       { question: "Where are apps published?", options: ["Google Play / App Store", "Amazon only", "Twitter", "Email"], answer: "Google Play / App Store" },
+//       { question: "Which is a mobile database?", options: ["MongoDB", "PowerPoint", "Word", "Photoshop"], answer: "MongoDB" }
+//     ]
+//   },
+//   {
+//     id: 5,
+//     title: "💻 Programming Fundamentals",
+//     modules: [
+//       { id: 1, title: "Introduction to Programming", notes: "Programming is giving instructions to a computer to perform tasks.", summary: "Programming = telling a computer what to do." },
+//       { id: 2, title: "Variables & Data Types", notes: "Variables store information. Data types include numbers, strings, and booleans.", summary: "Variables = containers for data." },
+//       { id: 3, title: "Control Structures", notes: "If-else statements and loops help control program flow.", summary: "Control structures = decision making and repetition." },
+//       { id: 4, title: "Functions", notes: "Functions are reusable blocks of code.", summary: "Functions = reusable code." },
+//       { id: 5, title: "Debugging", notes: "Debugging is finding and fixing errors in code.", summary: "Debugging = fixing mistakes in code." }
+//     ],
+//     quiz: [
+//       { question: "What is programming?", options: ["Giving instructions to a computer", "Drawing pictures", "Writing books", "Designing clothes"], answer: "Giving instructions to a computer" },
+//       { question: "Which is a data type?", options: ["String", "Shirt", "Shoe", "Song"], answer: "String" },
+//       { question: "What do loops do?", options: ["Repeat tasks", "Delete tasks", "Draw images", "Sing songs"], answer: "Repeat tasks" },
+//       { question: "What are functions?", options: ["Reusable code blocks", "Errors", "Bugs", "Data"], answer: "Reusable code blocks" },
+//       { question: "What is debugging?", options: ["Fixing code errors", "Breaking computers", "Making apps slow", "Writing essays"], answer: "Fixing code errors" }
+//     ]
+//   }
+// ];
+
+// export default coursesData;
+
+
+
+
 // src/utils/coursesData.js
 
 const coursesData = [

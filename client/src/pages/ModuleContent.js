@@ -13,7 +13,7 @@ const ModuleContent = ({ user, updateUser }) => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
-    if (!courseId || !moduleId) return; // ✅ Prevent undefined fetch
+    if (!courseId || !moduleId) return;
 
     const foundCourse = coursesData.find((c) => c.id === courseId);
     setCourse(foundCourse);
@@ -22,7 +22,6 @@ const ModuleContent = ({ user, updateUser }) => {
       const foundModule = foundCourse.modules.find((m) => m.id === moduleId);
       setModule(foundModule);
 
-      // Check if module is completed
       const completedModules = user?.completedModules?.[courseId] || [];
       setIsCompleted(completedModules.includes(moduleId));
     }
@@ -40,15 +39,16 @@ const ModuleContent = ({ user, updateUser }) => {
         ...user.completedModules,
         [courseId]: updatedCompletedModules
       },
-      points: user.points + 100,
-      stars: user.stars + (Math.random() > 0.7 ? 1 : 0)
+      points: (user.points || 0) + 100,
+      stars: (user.stars || 0) + (Math.random() > 0.7 ? 1 : 0),
+      achievements: { ...(user.achievements || {}) },
+      badges: [...(user.badges || [])]
     };
 
-    // Check for achievements
     const totalCompletedModules = Object.values(updatedUser.completedModules).flat().length;
     if (totalCompletedModules === 1 && !updatedUser.achievements.firstSteps) {
       updatedUser.achievements.firstSteps = true;
-      updatedUser.badges = [...(updatedUser.badges || []), 'First Steps'];
+      updatedUser.badges.push('First Steps');
       updatedUser.points += 200;
     }
 
@@ -127,12 +127,12 @@ const ModuleContent = ({ user, updateUser }) => {
         <div style={{ 
           lineHeight: '1.7', 
           fontSize: '16px',
-          background: '#f8fafc',
+          background: 'transparent',
           padding: '20px',
           borderRadius: '8px',
           border: '1px solid #e2e8f0'
         }}>
-          <p>
+          <p style={{ color: '#ffffff' }}>
             {showSummary 
               ? (moduleSummary || summarizeText(moduleNotes))
               : moduleNotes
@@ -141,24 +141,26 @@ const ModuleContent = ({ user, updateUser }) => {
         </div>
       </div>
 
-      {/* Video Section (Placeholder) */}
+      {/* Video Section (Now styled like Module Content) */}
       <div className="card" style={{ padding: '24px', marginBottom: '20px' }}>
         <h2 style={{ margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Play size={20} />
-          Educational Video
+          Module Video
         </h2>
         <div style={{ 
-          background: '#f1f5f9', 
-          padding: '40px', 
-          borderRadius: '8px', 
-          textAlign: 'center',
-          border: '2px dashed #cbd5e1'
+          lineHeight: '1.7', 
+          fontSize: '16px',
+          background: 'transparent',
+          padding: '20px',
+          borderRadius: '8px',
+          border: '1px solid #e2e8f0',
+          textAlign: 'center'
         }}>
-          <Play size={48} color="#64748b" />
-          <p style={{ margin: '16px 0 0 0', color: '#64748b' }}>
+          <Play size={48} color="#7c3aed" />
+          <p style={{ margin: '16px 0 0 0', color: '#ffffff' }}>
             Video content for "{module.title}"
             <br />
-            <small>In a full implementation, this would contain an embedded video</small>
+            <small style={{ color: '#9ca3af' }}>In a full implementation, this would contain an embedded video</small>
           </p>
         </div>
       </div>
@@ -170,8 +172,8 @@ const ModuleContent = ({ user, updateUser }) => {
           <p style={{ marginBottom: '16px', color: '#6b7280' }}>
             Test your understanding with these questions:
           </p>
-          <div style={{ background: '#fef7e7', padding: '16px', borderRadius: '8px', border: '1px solid #fbbf24' }}>
-            <p style={{ margin: 0, fontWeight: '500' }}>
+          <div style={{ background: 'transparent', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <p style={{ margin: 0, fontWeight: '500', color: '#ffffff' }}>
               {moduleQuiz.length} questions available
             </p>
             <button 
@@ -220,8 +222,8 @@ const ModuleContent = ({ user, updateUser }) => {
         </div>
 
         {isCompleted && !getNextModule() && (
-          <div style={{ marginTop: '16px', padding: '16px', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
-            <p style={{ margin: 0, color: '#166534', fontWeight: '500' }}>
+          <div style={{ marginTop: '16px', padding: '16px', background: 'transparent', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <p style={{ margin: 0, color: '#ffffff', fontWeight: '500' }}>
               🎉 Congratulations! You've completed all modules in this course. Ready for the final assessment?
             </p>
             <button

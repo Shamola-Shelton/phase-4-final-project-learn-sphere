@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import coursesData from "../utils/coursesData";
@@ -17,6 +18,7 @@ function Quiz({ user, updateUser }) {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const timerRef = useRef(null);
 
+  // ✅ Load questions properly (module + course-level)
   useEffect(() => {
     const course = coursesData.find(c => c.id === courseId);
     if (course) {
@@ -25,12 +27,14 @@ function Quiz({ user, updateUser }) {
         const module = course.modules.find(m => m.id === moduleId);
         courseQuestions = module?.content?.quiz || [];
       } else {
-        courseQuestions = course.modules.flatMap(m => m.content?.quiz || []);
+        const moduleQuizzes = course.modules.flatMap(m => m.content?.quiz || []);
+        courseQuestions = [...moduleQuizzes, ...(course.quiz || [])]; // ✅ include course-level quiz
       }
       setQuestions(courseQuestions);
     }
   }, [courseId, moduleId]);
 
+  // ✅ Timer logic
   useEffect(() => {
     if (!quizCompleted && questions.length > 0) {
       setTimeLeft(30);
@@ -49,70 +53,61 @@ function Quiz({ user, updateUser }) {
 
   const handleAnswer = (option) => {
     clearInterval(timerRef.current);
-    const correctAnswer = questions[currentQuestion]?.answer;
-    if (option === correctAnswer) setScore(prev => prev + 1);
+
+    if (option && option === questions[currentQuestion].answer) {
+      setScore(prev => prev + 1);
+    }
 
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion(prev => prev + 1);
     } else {
-      setShowAnswers(true);
       setQuizCompleted(true);
-      const pointsEarned = score * 10 + (option === correctAnswer ? 10 : 0);
-
-      // Ensure achievements are initialized
-      const achievements = user?.achievements || {};
-      if (!achievements.quizMaster && pointsEarned === questions.length * 10) achievements.quizMaster = true;
-
-      updateUser({
-        ...user,
-        points: (user.points || 0) + pointsEarned,
-        achievements
-      });
     }
   };
 
-  const handleRetake = () => {
-    setCurrentQuestion(0);
-    setScore(0);
-    setShowAnswers(false);
-    setQuizCompleted(false);
-  };
-
-  if (!questions.length) return <div className="container"><p>Loading quiz...</p></div>;
-
   return (
-    <div className="container card" style={{ padding:20 }}>
-      <h2>Quiz</h2>
-      {!showAnswers ? (
+    <div className="quiz-container">
+      {!quizCompleted ? (
         <>
-          <p>Question {currentQuestion + 1} of {questions.length}</p>
-          <p>Time Left: {timeLeft}s</p>
-          <h3>{questions[currentQuestion].question}</h3>
-          <div className="quiz-options" style={{ display:'flex', flexDirection:'column', gap:12 }}>
-            {questions[currentQuestion].options.map((opt, i) => (
-              <button key={i} onClick={() => handleAnswer(opt)} className="btn-light">
-                {opt}
-              </button>
-            ))}
+          <h2 className="quiz-title">Quick Knowledge Check</h2>
+          <div className="quiz-card">
+            <p className="question">
+              {questions[currentQuestion]?.question}
+            </p>
+            <div className="options">
+              {questions[currentQuestion]?.options.map((option, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleAnswer(option)}
+                  className="option-btn"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <p className="timer">⏳ {timeLeft}s</p>
           </div>
-          <p>Score: {score}</p>
         </>
       ) : (
-        <>
-          <h3>Quiz Completed!</h3>
-          <p>Your Score: {score} / {questions.length}</p>
-          <h4>Correct Answers:</h4>
-          <ul>
-            {questions.map((q, i) => (
-              <li key={i}><strong>{q.question}</strong>: {q.answer}</li>
-            ))}
-          </ul>
-          <button className="btn-primary" onClick={handleRetake}>Retake Quiz</button>
-          <button className="btn-light" onClick={() => history.push("/leaderboard")} style={{ marginLeft:12 }}>View Leaderboard</button>
-        </>
+        <div className="quiz-results">
+          <h2>Quiz Completed 🎉</h2>
+          <p>
+            You scored {score} out of {questions.length}
+          </p>
+          <button onClick={() => history.push(`/courses/${courseId}`)}>
+            Back to Course
+          </button>
+        </div>
       )}
     </div>
   );
 }
 
 export default Quiz;
+
+
+
+
+
+
+
