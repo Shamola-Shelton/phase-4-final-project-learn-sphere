@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import coursesData from "../utils/coursesData";
@@ -16,7 +17,9 @@ function Quiz({ user, updateUser }) {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const timerRef = useRef(null);
 
+
   // ✅ Load questions properly (module-level quiz or course-level)
+
   useEffect(() => {
     const course = coursesData.find(c => c.id === courseId);
     if (course) {
@@ -25,8 +28,10 @@ function Quiz({ user, updateUser }) {
         const module = course.modules.find(m => m.id === moduleId);
         moduleQuestions = module?.quiz || [];
       } else {
+
         // If no module specified, include all module quizzes
         moduleQuestions = course.modules.flatMap(m => m.quiz || []);
+
       }
       setQuestions(moduleQuestions);
     }
@@ -52,7 +57,9 @@ function Quiz({ user, updateUser }) {
   const handleAnswer = (option) => {
     clearInterval(timerRef.current);
 
+
     if (option && option === questions[currentQuestion].options[questions[currentQuestion].answer]) {
+
       setScore(prev => prev + 1);
     }
 
@@ -102,3 +109,10 @@ function Quiz({ user, updateUser }) {
 }
 
 export default Quiz;
+
+
+
+
+
+
+
