@@ -1,5 +1,5 @@
 from app import create_app
-from models import db, User, Course, Module
+from models import db, User, Course, Module, Enrollment, Review
 from flask_bcrypt import Bcrypt
 
 app = create_app()
@@ -14,6 +14,19 @@ with app.app_context():
     teacher_pw = bcrypt.generate_password_hash("teacher123").decode("utf-8")
     teacher = User(username="teacher1", email="teacher@example.com", password_hash=teacher_pw, role="teacher")
     db.session.add(teacher)
+    db.session.commit()
+
+    # Create some students
+    student1_pw = bcrypt.generate_password_hash("student123").decode("utf-8")
+    student1 = User(username="student1", email="student1@example.com", password_hash=student1_pw, role="student")
+    
+    student2_pw = bcrypt.generate_password_hash("student123").decode("utf-8")
+    student2 = User(username="student2", email="student2@example.com", password_hash=student2_pw, role="student")
+    
+    student3_pw = bcrypt.generate_password_hash("student123").decode("utf-8")
+    student3 = User(username="student3", email="student3@example.com", password_hash=student3_pw, role="student")
+    
+    db.session.add_all([student1, student2, student3])
     db.session.commit()
 
     # --- 1. Data Science Fundamentals ---
@@ -167,4 +180,54 @@ with app.app_context():
         db.session.add(Module(course_id=prog.id, title=m["title"], type=m["type"], content=m["content"]))
 
     db.session.commit()
-    print("✅ Database seeded with courses, modules, and quizzes!")
+
+    # --- CREATE ENROLLMENTS ---
+    print("📝 Creating enrollments...")
+    enrollments = [
+        # Student 1 enrollments
+        Enrollment(user_id=student1.id, course_id=data_science.id, progress=75),
+        Enrollment(user_id=student1.id, course_id=web_dev.id, progress=50),
+        Enrollment(user_id=student1.id, course_id=prog.id, progress=100),
+        
+        # Student 2 enrollments
+        Enrollment(user_id=student2.id, course_id=data_science.id, progress=25),
+        Enrollment(user_id=student2.id, course_id=cyber.id, progress=60),
+        Enrollment(user_id=student2.id, course_id=mobile.id, progress=30),
+        
+        # Student 3 enrollments
+        Enrollment(user_id=student3.id, course_id=web_dev.id, progress=90),
+        Enrollment(user_id=student3.id, course_id=mobile.id, progress=80),
+        Enrollment(user_id=student3.id, course_id=prog.id, progress=45),
+    ]
+    
+    db.session.add_all(enrollments)
+    db.session.commit()
+
+    # --- CREATE REVIEWS ---
+    print("⭐ Creating reviews...")
+    reviews = [
+        # Reviews for Data Science course
+        Review(user_id=student1.id, course_id=data_science.id, rating=5, comment="Excellent course! Very comprehensive and well-structured."),
+        Review(user_id=student2.id, course_id=data_science.id, rating=4, comment="Good introduction to data science concepts."),
+        
+        # Reviews for Web Development course
+        Review(user_id=student1.id, course_id=web_dev.id, rating=4, comment="Great practical examples and hands-on projects."),
+        Review(user_id=student3.id, course_id=web_dev.id, rating=5, comment="Perfect for beginners! Loved the step-by-step approach."),
+        
+        # Reviews for Cybersecurity course
+        Review(user_id=student2.id, course_id=cyber.id, rating=4, comment="Eye-opening content about security threats."),
+        
+        # Reviews for Mobile Development course
+        Review(user_id=student2.id, course_id=mobile.id, rating=3, comment="Good content but could use more advanced topics."),
+        Review(user_id=student3.id, course_id=mobile.id, rating=4, comment="Nice overview of mobile development platforms."),
+        
+        # Reviews for Programming course
+        Review(user_id=student1.id, course_id=prog.id, rating=5, comment="Perfect foundation course for programming!"),
+        Review(user_id=student3.id, course_id=prog.id, rating=4, comment="Clear explanations of programming concepts."),
+    ]
+    
+    db.session.add_all(reviews)
+    db.session.commit()
+
+    print("✅ Database seeded with courses, modules, enrollments, and reviews!")
+    print(f"📊 Created {len(enrollments)} enrollments and {len(reviews)} reviews")
