@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import datascience from "../images/datascience.jpeg";
+import webdevelopment from "../images/webdevelopment.jpeg";
+import cybersecurity from "../images/cybersecurity.jpeg";
+import mobileappdevelopment from "../images/mobileappdevelopment.jpeg";
+import programming from "../images/programming.jpeg";
 
 // ✅ Full dataset for all courses (inline)
 export const courses = [
@@ -13,7 +18,7 @@ export const courses = [
     rating: 4.8,
     studentsCount: 1200,
     instructor: "Dr. Ada Lovelace",
-    thumbnail: "https://source.unsplash.com/600x400/?data,science",
+    thumbnail: datascience,
     languages: ["Python", "SQL"],
     modules: [
       { id: "1", title: "Introduction to Data Science", type: "video", content: "https://www.youtube.com/embed/FsSrzmRawUg", completed: false },
@@ -33,7 +38,7 @@ export const courses = [
     rating: 4.7,
     studentsCount: 2500,
     instructor: "Grace Hopper",
-    thumbnail: "https://source.unsplash.com/600x400/?web,development",
+    thumbnail: webdevelopment,
     languages: ["HTML", "CSS", "JavaScript", "React"],
     modules: [
       { id: "1", title: "Intro to Web Development", type: "video", content: "https://www.youtube.com/embed/5YDVJaItmaY", completed: false },
@@ -52,7 +57,7 @@ export const courses = [
     rating: 4.9,
     studentsCount: 800,
     instructor: "Kevin Mitnick",
-    thumbnail: "https://source.unsplash.com/600x400/?cyber,security",
+    thumbnail: cybersecurity,
     languages: ["Networking", "Linux"],
     modules: [
       { id: "1", title: "Introduction to Cybersecurity", type: "video", content: "https://www.youtube.com/embed/ULGILG-ZhO0", completed: false },
@@ -70,7 +75,7 @@ export const courses = [
     rating: 4.6,
     studentsCount: 1500,
     instructor: "Linus Torvalds",
-    thumbnail: "https://dcdh7ea8gkhvt.cloudfront.net/blog/wp-content/uploads/2022/04/best-react-native-banner.webp",
+    thumbnail: mobileappdevelopment,
     languages: ["JavaScript", "React Native"],
     modules: [
       { id: "1", title: "Introduction to Mobile Apps", type: "video", content: "https://www.youtube.com/embed/yye7rSsiV6k", completed: false },
@@ -89,7 +94,7 @@ export const courses = [
     rating: 4.5,
     studentsCount: 3000,
     instructor: "Bjarne Stroustrup",
-    thumbnail: "https://ucarecdn.com/aa29bd64-20d5-47eb-878b-928ee201e0b4/-/resize/700/",
+    thumbnail: programming,
     languages: ["Python"],
     modules: [
       { id: "1", title: "Introduction to Programming", type: "video", content: "https://www.youtube.com/embed/F7CWjuaC6gw", completed: false },
@@ -98,22 +103,7 @@ export const courses = [
       { id: "4", title: "Programming Concepts", type: "video", content: "https://www.youtube.com/embed/kqtD5dpn9C8", completed: false },
     ],
   },
-  {
-    id: "6",
-    title: "System Design Security",
-    description: "Authentication, Authorization & Best Practices for secure systems.",
-    category: "System Design",
-    difficulty: "Advanced",
-    duration: "6 weeks",
-    rating: 4.8,
-    studentsCount: 950,
-    instructor: "Gene Spafford",
-    thumbnail: "https://source.unsplash.com/600x400/?system,security",
-    languages: ["Architecture", "Security"],
-    modules: [
-      { id: "1", title: "Authentication & Authorization", type: "video", content: "https://www.youtube.com/embed/muujW_JlcuM", completed: false },
-    ],
-  },
+ 
 ];
 
 function Courses() {
