@@ -14,23 +14,26 @@ function Quiz({ user, updateUser }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
-  const [showAnswers, setShowAnswers] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const timerRef = useRef(null);
 
-  // ✅ Load questions properly (module + course-level)
+
+  // ✅ Load questions properly (module-level quiz or course-level)
+
   useEffect(() => {
     const course = coursesData.find(c => c.id === courseId);
     if (course) {
-      let courseQuestions = [];
+      let moduleQuestions = [];
       if (moduleId) {
         const module = course.modules.find(m => m.id === moduleId);
-        courseQuestions = module?.content?.quiz || [];
+        moduleQuestions = module?.quiz || [];
       } else {
-        const moduleQuizzes = course.modules.flatMap(m => m.content?.quiz || []);
-        courseQuestions = [...moduleQuizzes, ...(course.quiz || [])]; // ✅ include course-level quiz
+
+        // If no module specified, include all module quizzes
+        moduleQuestions = course.modules.flatMap(m => m.quiz || []);
+
       }
-      setQuestions(courseQuestions);
+      setQuestions(moduleQuestions);
     }
   }, [courseId, moduleId]);
 
@@ -54,7 +57,9 @@ function Quiz({ user, updateUser }) {
   const handleAnswer = (option) => {
     clearInterval(timerRef.current);
 
-    if (option && option === questions[currentQuestion].answer) {
+
+    if (option && option === questions[currentQuestion].options[questions[currentQuestion].answer]) {
+
       setScore(prev => prev + 1);
     }
 

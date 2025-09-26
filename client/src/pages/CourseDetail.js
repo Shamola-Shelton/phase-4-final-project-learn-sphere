@@ -10,15 +10,13 @@ const CourseDetail = ({ user, updateUser }) => {
   const [modules, setModules] = useState([]);
 
   useEffect(() => {
-    // Make sure courseId is defined before fetching
     if (!courseId) return;
 
     const foundCourse = coursesData.find((c) => c.id === courseId);
     setCourse(foundCourse);
 
-    // Fetch modules only if course exists
-    if (foundCourse) {
-      setModules(foundCourse.modules || []);
+    if (foundCourse && Array.isArray(foundCourse.modules)) {
+      setModules(foundCourse.modules);
     }
   }, [courseId]);
 
@@ -47,6 +45,7 @@ const CourseDetail = ({ user, updateUser }) => {
     <div className="container">
       <h1>{course.title}</h1>
       <p>{course.description}</p>
+
       {!user?.enrolledCourses?.includes(courseId) && (
         <button onClick={handleEnroll} className="btn-primary">
           Enroll
@@ -58,16 +57,42 @@ const CourseDetail = ({ user, updateUser }) => {
           <h2>Modules</h2>
           <ul>
             {modules.map((mod) => (
-              <li key={mod.id}>
+              <li key={mod.id} className="module-item">
                 <button
-                  onClick={() => history.push(`/course/${courseId}/module/${mod.id}`)}
+                  onClick={() =>
+                    history.push(`/course/${courseId}/module/${mod.id}`)
+                  }
                   className="btn-light"
                 >
                   {mod.title}
                 </button>
+
+                {/* Only show quiz button if this module has a quiz */}
+                {Array.isArray(mod.quiz) && mod.quiz.length > 0 && (
+                  <button
+                    onClick={() =>
+                      history.push(`/quiz/${courseId}?module=${mod.id}`)
+                    }
+                    className="btn-quiz"
+                  >
+                    Take Module Quiz
+                  </button>
+                )}
               </li>
             ))}
           </ul>
+
+          {/* Course-level quiz button */}
+          {Array.isArray(course.quiz) && course.quiz.length > 0 && (
+            <div style={{ marginTop: "20px" }}>
+              <button
+                onClick={() => history.push(`/quiz/${courseId}`)}
+                className="btn-quiz-primary"
+              >
+                Take Course Quiz
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

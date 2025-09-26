@@ -1,3 +1,4 @@
+// src/pages/ModuleContent.js
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { ArrowLeft, BookOpen, Zap, Play, CheckCircle, ArrowRight } from 'lucide-react';
@@ -79,9 +80,18 @@ const ModuleContent = ({ user, updateUser }) => {
     );
   }
 
-  const moduleNotes = module.content?.notes || module.notes || "No content available.";
-  const moduleSummary = module.content?.auto_summary || module.summary;
-  const moduleQuiz = module.content?.quiz || [];
+  const moduleNotes = module.notes || "No content available.";
+  const moduleSummary = module.summary;
+  const moduleQuiz = module.quiz || [];
+
+  // ✅ Convert YouTube short link to embeddable format
+  const getEmbedUrl = (url) => {
+    if (!url) return null;
+    return url
+      .replace("watch?v=", "embed/")
+      .replace("youtu.be/", "www.youtube.com/embed/")
+      .split("&")[0]; // remove extra params like ?si=
+  };
 
   return (
     <div className="container">
@@ -141,29 +151,32 @@ const ModuleContent = ({ user, updateUser }) => {
         </div>
       </div>
 
-      {/* Video Section (Now styled like Module Content) */}
-      <div className="card" style={{ padding: '24px', marginBottom: '20px' }}>
-        <h2 style={{ margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Play size={20} />
-          Module Video
-        </h2>
-        <div style={{ 
-          lineHeight: '1.7', 
-          fontSize: '16px',
-          background: 'transparent',
-          padding: '20px',
-          borderRadius: '8px',
-          border: '1px solid #e2e8f0',
-          textAlign: 'center'
-        }}>
-          <Play size={48} color="#7c3aed" />
-          <p style={{ margin: '16px 0 0 0', color: '#ffffff' }}>
-            Video content for "{module.title}"
-            <br />
-            <small style={{ color: '#9ca3af' }}>In a full implementation, this would contain an embedded video</small>
-          </p>
+      {/* ✅ Video Section */}
+      {module.video && (
+        <div className="card" style={{ padding: '24px', marginBottom: '20px' }}>
+          <h2 style={{ margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Play size={20} />
+            Module Video
+          </h2>
+          <div style={{ 
+            background: 'transparent',
+            padding: '20px',
+            borderRadius: '8px',
+            border: '1px solid #e2e8f0',
+            textAlign: 'center'
+          }}>
+            <iframe
+              width="100%"
+              height="400"
+              src={getEmbedUrl(module.video)}
+              title={module.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Quiz Section */}
       {moduleQuiz.length > 0 && (
