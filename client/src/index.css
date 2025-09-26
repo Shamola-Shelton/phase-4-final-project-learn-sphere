@@ -272,3 +272,94 @@ button {
     width: 100%;
   }
 }
+
+/* =========================
+   QUIZ STYLES
+========================= */
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.quiz-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--accent2); /* teal highlight */
+}
+
+.quiz-card {
+  background: transparent; /* removed white background */
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* subtle border */
+  width: 100%;
+  max-width: 600px;
+  box-shadow: none; /* remove glowing heavy shadow */
+}
+
+.question {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.options {
+  display: grid;
+  gap: 0.8rem;
+}
+
+/* Softer option buttons */
+.option-btn {
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  background: #111; /* subtle dark background */
+  color: #ccc; /* muted text */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+.option-btn:hover {
+  background: rgba(124, 58, 237, 0.2); /* faint purple */
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* When selected */
+.option-btn.selected {
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  color: white;
+  border: none;
+}
+
+.timer {
+  margin-top: 1rem;
+  color: var(--accent2);
+  font-weight: bold;
+  text-align: right;
+}
+
+.quiz-results {
+  background: transparent; /* no solid card background */
+  padding: 2rem;
+  border-radius: 1rem;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  box-shadow: none;
+}
+
+/* =========================
+   MODULE CARDS
+========================= */
+.module-card {
+  background: transparent !important; /* force remove cream/green */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: white;
+  box-shadow: none;
+}

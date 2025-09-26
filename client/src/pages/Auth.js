@@ -37,7 +37,7 @@ function Auth({ onLogin }) {
     try {
       if (isLogin) {
         // Handle Sign In
-        const response = await fetch('http://127.0.0.1:5000/api/auth/login', {
+        const response = await fetch('http://127.0.0.1:5000/api/users/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ function Auth({ onLogin }) {
         }
       } else {
         // Handle Sign Up - DON'T automatically log in
-        const response = await fetch('http://127.0.0.1:5000/api/auth/register', {
+        const response = await fetch('http://127.0.0.1:5000/api/users/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

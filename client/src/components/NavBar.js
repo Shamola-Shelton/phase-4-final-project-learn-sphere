@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   BookOpen,
@@ -14,6 +14,7 @@ import {
 
 const NavBar = ({ user, onLogout }) => {
   const location = useLocation();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Dashboard" },
@@ -23,6 +24,12 @@ const NavBar = ({ user, onLogout }) => {
   ];
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    if (onLogout) onLogout();           // Call parent logout function
+    localStorage.removeItem("token");   // Clear auth token
+    setDropdownOpen(false);             // Close dropdown
+  };
 
   return (
     <nav className="navbar">
@@ -65,6 +72,7 @@ const NavBar = ({ user, onLogout }) => {
           <div className="user-menu" style={{ position: "relative" }}>
             <button
               className="user-btn"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
               style={{
                 display: "flex",
                 gap: 8,
@@ -80,26 +88,28 @@ const NavBar = ({ user, onLogout }) => {
               <span className="username">{user?.username ?? "Guest"}</span>
             </button>
 
-            <div
-              className="dropdown"
-              style={{
-                position: "absolute",
-                right: 0,
-                marginTop: 8,
-                background: "#fff",
-                borderRadius: 8,
-                boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
-                display: "none",
-              }}
-            >
-              <Link to="/profile" className="dropdown-item">
-                Profile
-              </Link>
-              <button onClick={onLogout} className="dropdown-item logout">
-                <LogOut className="icon" />
-                <span>Sign Out</span>
-              </button>
-            </div>
+            {dropdownOpen && (
+              <div
+                className="dropdown"
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  marginTop: 8,
+                  background: "#fff",
+                  borderRadius: 8,
+                  boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+                  zIndex: 10,
+                }}
+              >
+                <Link to="/profile" className="dropdown-item">
+                  Profile
+                </Link>
+                <button onClick={handleLogout} className="dropdown-item logout" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px', background: 'transparent', border: 'none', cursor: 'pointer' }}>
+                  <LogOut className="icon" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

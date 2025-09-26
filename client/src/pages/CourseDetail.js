@@ -22,17 +22,35 @@ const CourseDetail = ({ user, updateUser }) => {
     }
   }, [courseId]);
 
-  const handleEnroll = () => {
+  const handleEnroll = async () => {
     if (!user) {
       history.push("/auth");
       return;
     }
 
-    const updatedUser = {
-      ...user,
-      enrolledCourses: [...(user.enrolledCourses || []), courseId]
-    };
-    updateUser(updatedUser);
+    try {
+      // 🔹 Send enrollment to backend
+      const response = await fetch("http://127.0.0.1:5000/api/enrollments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: user.id, course_id: courseId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to enroll");
+      }
+
+      await response.json();
+
+      // 🔹 Update local user state
+      const updatedUser = {
+        ...user,
+        enrolledCourses: [...(user.enrolledCourses || []), courseId],
+      };
+      updateUser(updatedUser);
+    } catch (error) {
+      console.error("Enrollment error:", error);
+    }
   };
 
   if (!course) {
@@ -60,7 +78,9 @@ const CourseDetail = ({ user, updateUser }) => {
             {modules.map((mod) => (
               <li key={mod.id}>
                 <button
-                  onClick={() => history.push(`/course/${courseId}/module/${mod.id}`)}
+                  onClick={() =>
+                    history.push(`/course/${courseId}/module/${mod.id}`)
+                  }
                   className="btn-light"
                 >
                   {mod.title}
